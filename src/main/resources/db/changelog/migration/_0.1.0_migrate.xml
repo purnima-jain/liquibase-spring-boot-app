@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+   <!-- Create CATEGORIES table -->
+   <changeSet id="Create CATEGORIES table" author="Purnima Jain">
+        <createTable tableName="CATEGORIES">
+            <column name="CAT_ID" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CATEGORIES" />
+            </column>
+            <column name="CAT_NAME" type="varchar(100)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+    
+    <!-- Create PRODUCTS table -->
+    <changeSet id="Create PRODUCTS table" author="Purnima Jain">
+        <createTable tableName="PRODUCTS">
+            <column name="PRO_ID" type="int" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_PRODUCTS" />
+            </column>
+            <column name="PRO_NAME" type="varchar(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="PRO_CAT_ID" type="int" />
+        </createTable>
+    </changeSet>
+    
+    <!-- Create index on PRODUCTS.PRO_CAT_ID column -->
+    <changeSet id="Create IX_PRO_CAT_ID" author="Purnima Jain">
+        <createIndex tableName="PRODUCTS" indexName="IX_PRO_CAT_ID">
+            <column name="PRO_CAT_ID" />
+        </createIndex>
+    </changeSet>
+    
+    <!-- Create foreign key relationship between PRODUCTS.PRO_CAT_ID and CATEGORIES.CAT_ID -->
+    <changeSet id="Create FK_PRO_CAT_ID" author="Purnima Jain">
+        <addForeignKeyConstraint baseTableName="PRODUCTS" baseColumnNames="PRO_CAT_ID" constraintName="FK_PRO_CAT_ID"
+                                 referencedTableName="CATEGORIES" referencedColumnNames="CAT_ID" />
+    </changeSet>
+
+</databaseChangeLog>
